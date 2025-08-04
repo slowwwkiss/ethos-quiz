@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ethOS Code Presence Quiz</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #0e0e2c, #1b1b3a);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    #quiz, #result, #scanner {
+      max-width: 500px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      animation: fadeIn 0.6s ease-in-out;
+      margin-bottom: 2rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    .question {
+      margin: 1.5rem 0;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #4e5cf2;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #6d7aff;
+    }
+    #logo {
+      width: 120px;
+      margin-bottom: 1rem;
+    }
+    .answers button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 100%;
+    }
+    .badge {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: 1rem;
+      border-radius: 8px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-epic.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <img id="logo" src="logo.png" alt="ethOS logo" />
+  <div id="quiz">
+    <h1>How Many ethOS Codes Did You Earn This Week?</h1>
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+    <button onclick="nextQuestion()" id="nextBtn" style="display:none">Next</button>
+  </div>
+
+  <div id="result" style="display:none">
+    <h1 id="scoreTitle"></h1>
+    <p id="scoreDesc"></p>
+    <div id="badgeContainer"></div>
+    <button onclick="sha
