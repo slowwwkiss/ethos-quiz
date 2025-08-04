@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ethOS Quiz</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background: #fff;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    img {
+      max-width: 100px;
+    }
+    h1 {
+      margin: 10px 0 0;
+      color: #333;
+    }
+    .quiz {
+      margin-top: 20px;
+      max-width: 600px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .question label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #0070f3;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="ethOS logo">
+    <h1>How many ethOS Codes are you?</h1>
+  </header>
+  <div class="quiz" id="quiz">
+    <div class="question">
+      <h2>1. How often did you interact with ethOS this week?</h2>
+      <label><input type="radio" name="q1" value="2"> Every day</label>
+      <label><input type="radio" name="q1" value="1"> A few times</label>
+      <label><input type="radio" name="q1" value="0"> Not really</label>
+    </div>
+    <div class="question">
+      <h2>2. Have you posted any ethOS threads or memes recently?</h2>
+      <label><input type="radio" name="q2" value="2"> Of course!</label>
+      <label><input type="radio" name="q2" value="1"> Just 1 or 2</label>
+      <label><input type="radio" name="q2" value="0"> Not yet</label>
+    </div>
+    <div class="question">
+      <h2>3. Did you build something using ethOS?</h2>
+      <label><input type="radio" name="q3" value="2"> Yes, I shipped something!</label>
+      <label><input type="radio" name="q3" value="1"> I'm still building</label>
+      <label><input type="radio" name="q3" value="0"> Not a builder</label>
+    </div>
+    <div class="question">
+      <h2>4. How deep do you understand the flywheel mechanics?</h2>
+      <label><input type="radio" name="q4" value="2"> I’ve read the docs twice!</label>
+      <label><input type="radio" name="q4" value="1"> I skimmed them</label>
+      <label><input type="radio" name="q4" value="0"> What’s a flywheel?</label>
+    </div>
+    <div class="question">
+      <h2>5. Did you help or reply to other ethOS users?</h2>
+      <label><input type="radio" name="q5" value="2"> Yep, spreading alpha!</label>
+      <label><input type="radio" name="q5" value="1"> Sometimes</label>
+      <label><input type="radio" name="q5" value="0"> Not really</label>
+    </div>
+    <div class="question">
+      <h2>6. How much $AIR do you farm weekly?</h2>
+      <label><input type="radio" name="q6" value="2"> I max farm</label>
+      <label><input type="radio" name="q6" value="1"> I try</label>
+      <label><input type="radio" name="q6" value="0"> What’s $AIR?</label>
+    </div>
+    <button onclick="showResult()">Show My ethOS Score</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function showResult() {
+      const questions = ['q1','q2','q3','q4','q5','q6'];
+      let score = 0;
+      questions.forEach(q => {
+        const answer = document.querySelector('input[name="'+q+'"]:checked');
+        if (answer) {
+          score += parseInt(answer.value);
+        }
+      });
+
+      let resultText = "";
+      if (score >= 10) resultText = "🔥 OG Presence — you ARE ethOS!";
+      else if (score >= 6) resultText = "💪 Steady Builder — keep showing up!";
+      else resultText = "👀 Curious Lurker — time to engage more!";
+      document.getElementById("result").textContent = resultText + " (" + score + " Codes)";
+    }
+  </script>
+</body>
+</html>
