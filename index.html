@@ -15,17 +15,16 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      height: 100vh;
       text-align: center;
     }
-    #quiz, #result, #scanner {
+    #quiz, #result {
       max-width: 500px;
       padding: 2rem;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 20px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.2);
       animation: fadeIn 0.6s ease-in-out;
-      margin-bottom: 2rem;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -60,21 +59,6 @@
       margin: 0.5rem auto;
       width: 100%;
     }
-    .badge {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      border: 1px solid #fff;
-      border-radius: 8px;
-      display: inline-block;
-    }
-    input[type="text"] {
-      padding: 0.5rem;
-      width: 100%;
-      margin-top: 1rem;
-      border-radius: 8px;
-      border: none;
-    }
   </style>
 </head>
 <body>
@@ -94,5 +78,103 @@
   <div id="result" style="display:none">
     <h1 id="scoreTitle"></h1>
     <p id="scoreDesc"></p>
-    <div id="badgeContainer"></div>
-    <button onclick="sha
+    <button onclick="shareToTwitter()">Share Result on Twitter</button>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "How often did you engage with Eth OS posts this week?",
+        answers: ["Not at all", "Once or twice", "Every day", "Nonstop fr"],
+        score: [0, 1, 3, 5]
+      },
+      {
+        question: "Did you write or share a thread about Eth OS?",
+        answers: ["Nope", "Only a retweet", "Yes, a thread", "Multiple threads!"],
+        score: [0, 1, 3, 5]
+      },
+      {
+        question: "Did you build anything on top of Eth OS?",
+        answers: ["No", "A small idea", "A cool tool", "A full project!"],
+        score: [0, 2, 4, 6]
+      },
+      {
+        question: "Are you farming codes daily?",
+        answers: ["Not yet", "Trying to", "Consistent", "Obsessed"],
+        score: [0, 1, 3, 5]
+      },
+      {
+        question: "Did you help others understand Eth OS?",
+        answers: ["No", "A bit", "Yes", "I made a guide!"] ,
+        score: [0, 1, 3, 5]
+      },
+      {
+        question: "How much do you believe in the vision?",
+        answers: ["It's okay", "Looks solid", "I believe", "I live and breathe it"],
+        score: [0, 1, 3, 5]
+      }
+    ];
+
+    let currentQ = 0;
+    let totalScore = 0;
+
+    function loadQuestion() {
+      document.getElementById("nextBtn").style.display = "none";
+      const q = quizData[currentQ];
+      document.getElementById("question").innerText = q.question;
+      const answersDiv = document.getElementById("answers");
+      answersDiv.innerHTML = "";
+      q.answers.forEach((ans, i) => {
+        const btn = document.createElement("button");
+        btn.innerText = ans;
+        btn.onclick = () => selectAnswer(i);
+        answersDiv.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(index) {
+      totalScore += quizData[currentQ].score[index];
+      document.getElementById("nextBtn").style.display = "block";
+    }
+
+    function nextQuestion() {
+      currentQ++;
+      if (currentQ < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById("quiz").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      let title = "";
+      let desc = "";
+      if (totalScore <= 5) {
+        title = "Lurker";
+        desc = "You’re watching from afar. Eth OS needs your voice!";
+      } else if (totalScore <= 12) {
+        title = "Contributor";
+        desc = "You’re showing up! Keep the presence consistent.";
+      } else if (totalScore <= 20) {
+        title = "Believer";
+        desc = "You’re living the ethos. Respect.";
+      } else {
+        title = "Founding Presence";
+        desc = "You ARE the OS. You’re part of the story.";
+      }
+      document.getElementById("scoreTitle").innerText = title;
+      document.getElementById("scoreDesc").innerText = desc;
+    }
+
+    function shareToTwitter() {
+      const text = encodeURIComponent(I took the Eth OS quiz and got: ${document.getElementById("scoreTitle").innerText}!\n\nTake yours → ethos.vision);
+      const url = https://twitter.com/intent/tweet?text=${text};
+      window.open(url, '_blank');
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
